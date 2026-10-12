@@ -1,0 +1,31 @@
+{
+  "status": "public-design-draft-mit",
+  "reviewed_images": {
+    "examples/screenshots/list.png": "804a4470b2f0b2481026beba56e9b7d2d7629a7848e5b0be9def922c1761910e",
+    "examples/screenshots/chat.png": "41cc38014da37dbce99b0da0ae1177f5c05bcb927698d94164858fa98056c422",
+    "examples/screenshots/resources.png": "45e9bddd6cef42cc8f5af5bc5d6849a1cc77cd557d99651440ca4dd6f19f66ed"
+  },
+  "purpose": "explicit public upload allowlist; never upload sibling review or parent directory",
+  "files": [
+    ".gitignore",
+    "LICENSE",
+    "README.md",
+    "SECURITY.md",
+    "docs/ARCHITECTURE.md",
+    "docs/SECURITY-AUDIT.md",
+    "docs/OPERATIONS.md",
+    "docs/ACCEPTANCE.md",
+    "docs/RELEASE.md",
+    "docs/RELATED-WORK.md",
+    "docs/SOURCES.md",
+    "prompts/BUILD.md",
+    "scripts/audit_public.py",
+    "tests/test_audit_public.py",
+    "docs/SCREEN-EXAMPLES.md",
+    "examples/phone-ui.html",
+    "examples/screenshots/list.png",
+    "examples/screenshots/chat.png",
+    "examples/screenshots/resources.png",
+    "upload-manifest.json"
+  ]
+}

@@ -1,0 +1,18 @@
+# Runtime data must live outside this repository.
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+state/
+secrets/
+logs/
+review/
+*.dpapi
+*.db
+*.sqlite*
+*.pem
+*.key
+*.zip
+*.log
+*.har

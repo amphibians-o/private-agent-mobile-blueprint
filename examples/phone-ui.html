@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; media-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>スマホUIの画面例 — 接続なし</title>
+<style>
+:root{color-scheme:dark;--ink:var(--foreground,#edf0f8);--muted:var(--muted-foreground,#a2adc3);--panel:var(--card,#182132);--line:var(--border,#334058);--brand:var(--accent,#aba0ff)}
+*{box-sizing:border-box}body{margin:0;padding:12px;background:#101624;color:var(--ink);font:15px/1.55 system-ui,sans-serif}button,input,textarea,select{font:inherit;color:inherit}button,select{min-height:44px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--panel);cursor:pointer}button:hover{border-color:var(--brand)}button:disabled{opacity:.55;cursor:not-allowed}button.primary{background:var(--brand);color:#151322;border:0;font-weight:650}button.danger{border-color:#bb786f;color:#ffb7a9}input,textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:#121a2a;padding:12px;font-size:16px}textarea{resize:vertical;min-height:76px}h1,h2,h3,p{margin:0}h1{font-size:17px}h2{font-size:18px;margin-bottom:10px}h3{font-size:14px;color:var(--muted);margin:18px 0 8px}.muted{color:var(--muted);font-size:13px}.label{font-size:12px;color:var(--muted)}.app{width:min(100%,440px);height:calc(100dvh - 24px);min-height:480px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:20px;background:#131c2c;overflow:hidden}.demo{padding:9px 14px;background:#30274a;font-size:12px;color:#e0d8ff;border-bottom:1px solid var(--line)}header{padding:10px 12px;border-bottom:1px solid var(--line)}.header-row,.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.header-row{justify-content:space-between}.nav{display:flex;gap:6px;margin-top:9px}.nav button{flex:1;padding:7px;font-size:13px}.scenario{padding:8px 12px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center}.scenario label{font-size:12px;white-space:nowrap}.scenario select{flex:1;min-width:0;font-size:13px;min-height:36px;padding:4px 8px}.view{min-height:0;flex:1;overflow:auto;padding:14px}.view.chat{display:flex;flex-direction:column;padding:0}.thread{padding:14px;overflow:auto;flex:1;min-height:90px}.message{margin-bottom:14px;padding:12px;border:1px solid var(--line);border-radius:13px;white-space:pre-wrap;overflow-wrap:anywhere}.message.user{background:#262d45;margin-left:24px}.message.assistant{background:#1b2537;margin-right:12px}.speaker{color:var(--muted);font-size:12px;display:block;margin-bottom:5px}.composer{padding:12px;border-top:1px solid var(--line);background:#131c2c}.composer .row{margin-top:8px}.composer .row button{flex:1;font-size:13px}.destination{font-size:12px;margin-bottom:8px}.session{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:14px;padding:10px;margin:8px 0;background:var(--panel)}.session.pinned{border-left:4px solid var(--brand)}.session .open{border:0;background:transparent;text-align:left;flex:1;min-width:0;padding:3px 4px}.title{display:block;font-weight:600}.session .pin{width:44px;flex:none;padding:6px}.card{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel);margin-bottom:12px}.card p{margin-bottom:10px}.badge{display:inline-block;border-radius:9px;padding:2px 7px;background:#30394b;font-size:12px}.notice{padding:8px 12px;font-size:12px;color:#ddd2ff;border-top:1px solid var(--line);min-height:34px}.metric{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:7px 0;gap:14px}.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:8px;background:#2e3750;font-size:12px}.chip button{min-height:30px;padding:2px 8px}.model{display:block;width:100%;text-align:left;margin:8px 0}.model[aria-pressed=true]{border-color:var(--brand);background:#2b2945}.sample-art{padding:20px;background:linear-gradient(140deg,#444561,#242e40);border-radius:10px;margin:10px 0;letter-spacing:.15em}.status{color:var(--brand)}[hidden]{display:none!important}@media(max-height:500px){.app{height:auto;min-height:480px}.view{max-height:none}.thread{max-height:220px}}
+</style>
+</head>
+<body>
+<main class="app">
+<div class="demo">画面例：架空データ・実接続なし・保存なし</div>
+<header><div class="header-row"><h1>Agent Mobile</h1><span class="badge">オフラインの例</span></div><nav class="nav" aria-label="主画面"><button id="showList">会話一覧</button><button id="showResources">資源・接続</button><button id="showPair">端末接続</button></nav></header>
+<div class="scenario"><label for="stateExample">会話の状態例</label><select id="stateExample"><option value="idle">入力できる状態</option><option value="running">実行中・追加指示</option><option value="approval">承認待ち</option><option value="history">保存履歴の再開</option><option value="foreign">他の使用先から引き継ぎ</option><option value="lost">接続切れ・送信結果未確認</option></select></div>
+<section id="list" class="view"><h2>会話を探す</h2><label class="label" for="search">検索：この画面例のタイトルだけ</label><input id="search" placeholder="会話を検索"><button id="newChat" class="primary" style="width:100%;margin-top:10px">＋ 新しい下書き</button><h3>ピン留め</h3><div class="session pinned" id="sampleRow"><button class="open" id="openSample"><span class="title">画面例用の相談</span><span class="muted">担当：メインbot · 入力できます</span></button><button class="pin" id="pinSample" aria-label="ピン留めを解除">📌</button></div><h3>活動順の直近（架空）</h3><div class="session" id="historyRow"><button class="open" id="openHistory"><span class="title">見本カードの確認</span><span class="muted">保存履歴 · 再開が必要</span></button></div><p class="muted">未読を課題の進捗や実行状態の代わりにしません。</p></section>
+<section id="chat" class="view chat" hidden><div class="thread" id="thread"><article class="message user"><span class="speaker">利用者 · 架空の会話</span>公開用の見本カードについて、次の作業を相談したい。</article><article class="message assistant"><span class="speaker">メインbot · 架空の返答</span>本文を確認してから、必要な修正をこの会話で指示できます。<div class="sample-art">見本カード</div><span class="muted">図版はCSSの見本です。実際の生成物ではありません。画像表示・動画再生は実サービス構築後に別途確認します。</span></article></div>
+<div class="card" id="approvalPanel" hidden><p><strong>承認待ちの表示例</strong></p><p>対象：この架空の会話<br>操作：見本ファイルを更新<br>範囲：専用成果物領域</p><p class="muted">実装時は正規の承認IDと現在状態を確認します。ここでは何も実行しません。</p><div class="row"><button id="allowOnce" class="primary">今回のみ許可</button><button id="deny">拒否</button></div></div>
+<div class="card" id="accessPanel" hidden><p id="accessText"></p><button id="resume" class="primary">この会話を再開して操作</button><p class="muted">閲覧だけでは別の使用先を停止しません。</p></div>
+<div class="card" id="takeoverPanel" hidden><p><strong>この会話を引き継ぎますか？</strong></p><p>元の使用先の実行・承認待ちは停止します。保存履歴は同じ会話として再開します。未保存の結果は保証できません。</p><div class="row"><button id="takeover" class="danger">使用中でも引き継ぐ</button><button id="cancelTakeover">取り消す</button></div><p class="muted">これは確認画面の例。実際には停止も再開もしません。</p></div>
+<div class="composer" id="composerPanel"><div class="destination" id="destination">送信先：この会話／メインbot</div><div id="tray"></div><label class="label" for="composer">指示を入力（このページのメモリー内だけ）</label><textarea id="composer" placeholder="確認や修正の指示を書いてください"></textarea><div class="row"><button id="attachExample">＋ 添付例</button><button id="openModels">モデル：標準候補</button><button id="send" class="primary">送信例</button></div><button id="stopDemo" class="danger" hidden style="margin-top:8px">この実行を停止する例</button></div></section>
+<section id="resources" class="view" hidden><h2>資源・接続</h2><p class="muted" style="margin-bottom:12px">読み取り専用の表示例。実際のGPUには接続していません。</p><div class="card"><strong>ワーカーA</strong><div class="metric"><span>GPU</span><span>未取得</span></div><div class="metric"><span>VRAM 使用／総容量</span><span>未取得</span></div><div class="metric"><span>GPU使用率・温度</span><span>未取得</span></div><div class="metric"><span>取得時刻</span><span>未取得</span></div><div class="metric"><span>推論待ち</span><span>対応API未確認</span></div></div><div class="card"><strong>接続状態</strong><p class="muted">スマホ入口：デモのため未接続<br>正規バックエンド：未接続<br>監視アダプター：未接続</p><p>失敗時は「取得失敗」、前回値がある場合は取得時刻と「古い値」を併記します。0や正常で補いません。</p></div><button id="backChat">同じ会話に戻る</button></section>
+<section id="models" class="view" hidden><h2>この会話のモデル</h2><p class="muted">候補名は架空。既定モデルや別の会話は変えません。</p><button id="modelDefault" class="model" aria-pressed="true">標準候補<br><span class="muted">事前に設定した候補の例</span></button><button id="modelLocal" class="model" aria-pressed="false">ローカル候補<br><span class="muted">接続・実推論の成功とは別に確認</span></button><p class="muted" style="margin:14px 0">実装時は追加費用の警告がある場合に内容と対象を示し、別途同意を得ます。選択結果は正規APIで読み戻します。</p><div class="row"><button id="applyModel" class="primary">この会話に適用する例</button><button id="cancelModel">取り消す</button></div></section>
+<section id="pair" class="view" hidden><h2>端末を接続する例</h2><div class="card"><p>PC側の管理画面で短期・単回コードを発行し、スマホで入力する流れです。QRは必須にしません。</p><label class="label" for="deviceLabel">端末名の例（保存されません）</label><input id="deviceLabel" placeholder="手元のスマホ"><p class="muted">この見本には実URL・実コード・鍵を入力しないでください。コード入力欄と認証処理はありません。</p><button id="pairDemo" class="primary">接続後の導線を見る</button></div><div class="card"><strong>端末管理の例</strong><p>PC側に端末一覧・有効期限・個別失効を用意します。失効した端末の接続済みWSも閉じます。</p></div></section>
+<div id="notice" class="notice" role="status" aria-live="polite">すべて架空の画面例です。実際の操作は行いません。</div>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const mem={id:'sample',mode:'idle',model:'標準候補',pendingModel:'標準候補',drafts:{sample:'',new:'',history:''},models:{sample:'標準候補',new:'標準候補',history:'標準候補'},attached:{sample:false,new:false,history:false},messages:{sample:[],new:[],history:[]},pinned:true};
+const sampleThread=[...$('thread').children].map(node=>node.cloneNode(true));
+function paintThread(){
+ $('thread').replaceChildren();
+ if(mem.id!=='new')for(const node of sampleThread)$('thread').append(node.cloneNode(true));
+ for(const text of mem.messages[mem.id]){
+  const item=document.createElement('article');item.className='message user';const label=document.createElement('span');label.className='speaker';label.textContent='利用者 · 送信表示の例';item.append(label,document.createTextNode(text));$('thread').append(item);
+ }
+ $('thread').hidden=mem.id==='new'&&!mem.messages[mem.id].length;
+}
+const views=['list','chat','resources','models','pair'];
+function notice(text){$('notice').textContent=text;}
+function remember(){mem.drafts[mem.id]=$('composer').value;}
+function route(name){for(const id of views)$(id).hidden=id!==name;}
+function composerState(){
+ const readonly=mem.mode==='history'||mem.mode==='foreign';
+ $('accessPanel').hidden=!readonly;$('composerPanel').hidden=readonly;$('takeoverPanel').hidden=true;
+ $('approvalPanel').hidden=mem.mode!=='approval';$('stopDemo').hidden=mem.mode!=='running';
+ $('send').disabled=mem.mode==='lost'||mem.mode==='approval';$('send').textContent=mem.mode==='running'?'追加指示の例':'送信例';
+ $('accessText').textContent=mem.mode==='foreign'?'他の使用先が使用中という状態例です。引き継ぎは次の画面でもう一度確認します。':'保存履歴を閲覧しています。入力するには明示的に再開します。';
+ $('destination').textContent=mem.id==='new'?'送信先：新しい会話（初回送信時に作成）':'送信先：この会話／メインbot';
+ $('openModels').textContent='モデル：'+mem.models[mem.id];
+ if(mem.mode==='lost')notice('接続切れの例：送信結果が未確認なら自動再送しません。入力は保持します。');
+}
+function openChat(id,mode='idle'){remember();mem.id=id;mem.mode=mode;$('composer').value=mem.drafts[id]||'';$('stateExample').value=mode;paintThread();$('tray').replaceChildren();paintAttachment();composerState();route('chat');}
+function paintAttachment(){
+ $('tray').replaceChildren();if(!mem.attached[mem.id])return;
+ const chip=document.createElement('span');chip.className='chip';chip.textContent='説明.txt · 架空の添付 · 未送信 ';
+ const remove=document.createElement('button');remove.textContent='×';remove.setAttribute('aria-label','添付例を外す');remove.onclick=()=>{mem.attached[mem.id]=false;paintAttachment();};chip.append(remove);$('tray').append(chip);
+}
+$('openSample').onclick=()=>openChat('sample');$('openHistory').onclick=()=>openChat('history','history');$('newChat').onclick=()=>openChat('new');
+$('composer').oninput=remember;
+$('showList').onclick=()=>{remember();route('list');};$('showResources').onclick=()=>{remember();route('resources');};$('showPair').onclick=()=>{remember();route('pair');};$('backChat').onclick=()=>{composerState();route('chat');};
+$('stateExample').onchange=()=>{remember();mem.mode=$('stateExample').value;composerState();route('chat');};
+$('search').oninput=()=>{const q=$('search').value.trim();$('sampleRow').hidden=!$('sampleRow').textContent.includes(q);$('historyRow').hidden=!$('historyRow').textContent.includes(q);};
+$('pinSample').onclick=()=>{mem.pinned=!mem.pinned;$('sampleRow').classList.toggle('pinned',mem.pinned);$('pinSample').textContent=mem.pinned?'📌':'☆';$('pinSample').setAttribute('aria-label',mem.pinned?'ピン留めを解除':'ピン留めする');notice('ピン留めの表示例を変更しました。保存・同期はしていません。');};
+$('attachExample').onclick=()=>{mem.attached[mem.id]=true;paintAttachment();notice('架空の添付を表示しました。ファイルの読取・保存・アップロードは行いません。');};
+$('openModels').onclick=()=>{remember();mem.pendingModel=mem.models[mem.id];paintModels();route('models');};
+function paintModels(){$('modelDefault').setAttribute('aria-pressed',mem.pendingModel==='標準候補');$('modelLocal').setAttribute('aria-pressed',mem.pendingModel==='ローカル候補');}
+$('modelDefault').onclick=()=>{mem.pendingModel='標準候補';paintModels();};$('modelLocal').onclick=()=>{mem.pendingModel='ローカル候補';paintModels();};
+$('applyModel').onclick=()=>{mem.models[mem.id]=mem.pendingModel;composerState();route('chat');notice('画面例内の選択だけを変更しました。実モデルは変更していません。');};$('cancelModel').onclick=()=>route('chat');
+function approval(choice){mem.mode='idle';$('stateExample').value='idle';composerState();notice('承認操作の画面例：'+choice+'。実行していません。');}
+$('allowOnce').onclick=()=>approval('今回のみ許可');$('deny').onclick=()=>approval('拒否');
+$('resume').onclick=()=>{if(mem.mode==='foreign'){$('accessPanel').hidden=true;$('takeoverPanel').hidden=false;}else{mem.mode='idle';$('stateExample').value='idle';composerState();notice('再開後の表示例です。実バックエンドへ再開を依頼していません。');}};
+$('cancelTakeover').onclick=()=>{$('takeoverPanel').hidden=true;$('accessPanel').hidden=false;notice('引き継ぎを取り消した状態例です。');};
+$('takeover').onclick=()=>{mem.mode='idle';$('stateExample').value='idle';composerState();notice('引き継ぎ後の表示例です。実際の停止・再開は行っていません。');};
+$('stopDemo').onclick=()=>{mem.mode='idle';$('stateExample').value='idle';composerState();notice('停止後の表示例です。サービス・GPU・実行は停止していません。');};
+$('send').onclick=()=>{
+ if($('send').disabled)return;const text=$('composer').value.trim();if(!text&&!mem.attached[mem.id]){notice('画面例の入力を記入するか添付例を選んでください。');return;}
+ mem.messages[mem.id].push(text||'架空の添付のみ');paintThread();
+ $('composer').value='';remember();mem.attached[mem.id]=false;paintAttachment();notice('入力を画面内に追加しただけです。推論・保存・通信はしていません。');
+};
+$('pairDemo').onclick=()=>{route('list');notice('接続後の導線だけを表示しました。実際には接続していません。');};
+</script>
+</body>
+</html>
