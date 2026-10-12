@@ -1,4 +1,4 @@
-# Private Agent Mobile Blueprint（公開用下書き）
+# Private Agent Mobile Blueprint
 
 スマホから自分のAIエージェントを操作し、別マシンのGPU状況を確認するための、LLM向け設計・安全要件・受入試験集。
 
